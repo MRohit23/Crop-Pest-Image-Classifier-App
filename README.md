@@ -1,6 +1,3 @@
-Sure, here's the updated README file template without the license, contact information, and
-acknowledgments sections:
-
 # 🌱 Crop Pest Image Classifier App 🐛📸
 
 Welcome to the Crop Pest Image Classifier App repository! This Kotlin Android application leverages
