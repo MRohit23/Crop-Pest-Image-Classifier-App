@@ -13,9 +13,6 @@ TensorFlow Lite to classify crop pest images in real-time.
 - Integration with a pre-trained TensorFlow Lite model for efficient inference
 - Real-time classification results displayed to the user
 
-## 📷 Screenshots
-
-Include screenshots or GIFs showcasing the app's functionality here.
 
 ## 🛠 Installation
 
