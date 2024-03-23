@@ -1,9 +1,10 @@
-Sure, here's the updated README file template without the license, contact information, and acknowledgments sections:
+Sure, here's the updated README file template without the license, contact information, and
+acknowledgments sections:
 
-```markdown
 # 🌱 Crop Pest Image Classifier App 🐛📸
 
-Welcome to the Crop Pest Image Classifier App repository! This Kotlin Android application leverages TensorFlow Lite to classify crop pest images in real-time.
+Welcome to the Crop Pest Image Classifier App repository! This Kotlin Android application leverages
+TensorFlow Lite to classify crop pest images in real-time.
 
 ## 🚀 Features
 
@@ -38,8 +39,4 @@ The TensorFlow Lite model used for image classification is included in the `asse
 
 Feel free to provide feedback or report issues related to the project!
 
-```
-
-```
 ## This version should fit your requirements better. Feel free to customize it further if needed!
-```
