@@ -40,17 +40,19 @@ class MainActivity : AppCompatActivity() {
         imageView = findViewById(R.id.imageView)
 
 
-        var labels = application.assets.open("labels.txt").bufferedReader().readLines()
+        val labels = application.assets.open("labels.txt").bufferedReader().readLines()
 
         //image processor
-        var imageProcessor = ImageProcessor.Builder()
+        val imageProcessor = ImageProcessor.Builder()
             .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
             .add(NormalizeOp(0.0f, 255.0f))
             .build()
 
 
+
+
         selectBtn.setOnClickListener {
-            var intent = Intent()
+            val intent = Intent()
             intent.setAction(Intent.ACTION_GET_CONTENT)
             intent.setType("image/*")
             startActivityForResult(intent, 100)

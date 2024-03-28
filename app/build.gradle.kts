@@ -37,12 +37,18 @@ android {
         mlModelBinding = true
     }
 
+
 }
 
-
-
+buildscript {
+    repositories {
+        google()  // Google Maven repository
+        mavenCentral()  // Maven Central repository
+        // Add other repositories here if needed
+    }
+}
 dependencies {
-
+    implementation ("org.jetbrains.kotlinx:kotlin-deeplearning-api:0.2.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
