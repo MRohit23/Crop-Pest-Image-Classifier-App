@@ -123,15 +123,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
