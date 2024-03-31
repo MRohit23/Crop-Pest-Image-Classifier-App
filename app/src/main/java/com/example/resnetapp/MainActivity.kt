@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.resnetapp.ml.LiteModel
 import org.tensorflow.lite.DataType
-import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
@@ -29,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bitmap: Bitmap
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -41,14 +41,23 @@ class MainActivity : AppCompatActivity() {
 
 
         val labels = application.assets.open("labels.txt").bufferedReader().readLines()
+        bitmap = Bitmap.createBitmap(224, 224, Bitmap.Config.ARGB_8888)
 
         //image processor
+//        val imageProcessor = ImageProcessor.Builder()
+//            .add(ResizeOp(1, 1, ResizeOp.ResizeMethod.BILINEAR))
+////            .add(NormalizeOp(0.0f, 255.0f))
+//            .build()
+
+
+// Resize the image to match the input size expected by the model (224x224 pixels)
         val imageProcessor = ImageProcessor.Builder()
             .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
-            .add(NormalizeOp(0.0f, 255.0f))
             .build()
+        val tensorImage = TensorImage.fromBitmap(bitmap)
 
 
+// Convert the resized image to a float array
 
 
         selectBtn.setOnClickListener {
@@ -61,21 +70,25 @@ class MainActivity : AppCompatActivity() {
 
 
         predBtn.setOnClickListener {
-
+            if (!::bitmap.isInitialized) {
+                // Handle the case where bitmap is not initialized
+                return@setOnClickListener
+            }
 
             try {
                 var tensorImage = TensorImage(DataType.FLOAT32)
                 tensorImage.load(bitmap)
 
-
                 tensorImage = imageProcessor.process(tensorImage)
+
+                //tensorImage = reshapedImgArray.process(tensorImage)
 
 
                 val model = LiteModel.newInstance(this)
 
 // Creates inputs for reference.
                 val inputFeature0 =
-                    TensorBuffer.createFixedSize(intArrayOf(1, 1, 1, 3), DataType.FLOAT32)
+                    TensorBuffer.createFixedSize(intArrayOf(1, 224 , 224, 3), DataType.FLOAT32)
                 inputFeature0.loadBuffer(tensorImage.buffer)
 
 // Runs model inference and gets result.
@@ -83,12 +96,7 @@ class MainActivity : AppCompatActivity() {
                     val outputs = model.process(inputFeature0)
                     val outputFeature0 = outputs.outputFeature0AsTensorBuffer.floatArray
                     val maxIdx = outputFeature0.indices.maxByOrNull { outputFeature0[it] } ?: -1
-//                    outputFeature0.forEachIndexed { index: Int, fl: Float ->
-//                        if (outputFeature0[maxIdx] < fl) {
-//                            maxIdx = index
-//                        }
-//                    }
-                    // the above commented code is replaced by the maxIdx declaration line
+//
 
                     resView.text = labels[maxIdx]
 
@@ -111,7 +119,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -125,3 +132,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
+
+
